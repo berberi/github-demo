@@ -1,9 +1,11 @@
+import NoSelectedRepo from "../../components/NoSelectedRepo";
 import React, { createContext, useCallback, useReducer } from "react";
 import reducer, { initialState } from "./reducer";
 import RepoList from "../../components/RepoList";
+import SelectedRepo from "../../components/SelectedRepo";
 import { LAMBDA_API_URL } from "./constants";
 import { setIsLoading, setLastSeenRepo, setRepos } from "./actions";
-import { Wrapper } from "./styles";
+import { ContentWrapper, Wrapper } from "./styles";
 
 export const AppDispatch = createContext(null);
 
@@ -40,7 +42,13 @@ export default function App() {
           loadNextPage={loadNextPage}
           repos={repos}
         />
-        {selectedRepo && <p>Selected repo: {repos[selectedRepo].full_name}</p>}
+        <ContentWrapper>
+          {typeof selectedRepo === "number" ? (
+            <SelectedRepo repo={repos[selectedRepo]} />
+          ) : (
+            <NoSelectedRepo />
+          )}
+        </ContentWrapper>
       </Wrapper>
     </AppDispatch.Provider>
   );

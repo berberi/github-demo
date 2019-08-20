@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { setSelectedRepo } from "../../containers/App/actions";
 import { AppDispatch } from "../../containers/App";
+import { RepoItemWrapper } from "./styles";
 
 export default function RepoItem({ children, index, style }) {
   const dispatch = useContext(AppDispatch);
@@ -10,8 +11,8 @@ export default function RepoItem({ children, index, style }) {
   ]);
 
   return (
-    <div onClick={selectRepo} style={style}>
+    <RepoItemWrapper onClick={selectRepo} style={style}>
       {children}
-    </div>
+    </RepoItemWrapper>
   );
 }
