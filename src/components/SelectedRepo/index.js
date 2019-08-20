@@ -16,7 +16,10 @@ export default function SelectedRepo({
       </a>
       <p>{description}</p>
       <p>
-        Created by <a href={owner_url}>{owner_name}</a>
+        Created by{" "}
+        <a href={owner_url} target="_blank">
+          {owner_name}
+        </a>
       </p>
       <img alt={owner_name} src={avatar_url} />
     </SelectedRepoWrapper>
