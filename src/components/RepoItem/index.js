@@ -3,7 +3,7 @@ import { setSelectedRepo } from "../../containers/App/actions";
 import { AppDispatch } from "../../containers/App";
 import { RepoItemWrapper } from "./styles";
 
-export default function RepoItem({ children, index, style }) {
+export default function RepoItem({ children, index, selected, style }) {
   const dispatch = useContext(AppDispatch);
 
   const selectRepo = useCallback(() => dispatch(setSelectedRepo(index)), [
@@ -11,7 +11,7 @@ export default function RepoItem({ children, index, style }) {
   ]);
 
   return (
-    <RepoItemWrapper onClick={selectRepo} style={style}>
+    <RepoItemWrapper onClick={selectRepo} selected={selected} style={style}>
       {children}
     </RepoItemWrapper>
   );

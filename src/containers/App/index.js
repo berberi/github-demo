@@ -40,6 +40,7 @@ export default function App() {
           isNextPageLoading={isLoading}
           loadNextPage={loadNextPage}
           repos={repos}
+          selectedRepo={selectedRepo}
         />
         <ContentWrapper>
           {typeof selectedRepo === "number" ? (

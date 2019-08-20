@@ -10,7 +10,8 @@ export default function RepoList({
   isNextPageLoading,
   loadNextPage,
   repos,
-  repos: { length: repoCount }
+  repos: { length: repoCount },
+  selectedRepo
 }) {
   // one extra item for loading indicator
   const itemCount = repoCount + (hasNextPage ? 1 : 0);
@@ -34,12 +35,12 @@ export default function RepoList({
       if (!repo) return <LoadingIndicator style={style} />;
 
       return (
-        <RepoItem index={index} style={style}>
+        <RepoItem index={index} style={style} selected={index === selectedRepo}>
           {repo.full_name}
         </RepoItem>
       );
     },
-    [repos]
+    [repos, selectedRepo]
   );
 
   const wrapperRef = React.useRef(null);
