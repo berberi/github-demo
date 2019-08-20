@@ -18,7 +18,8 @@ export default function App() {
 
     const options = lastSeenRepo ? `?since=${lastSeenRepo}` : "";
     const response = await fetch(`${LAMBDA_API_URL}/repos${options}`);
-    const { data, next: nextLastSeenRepo } = await response.json();
+    const json = await response.json();
+    const { data, next: nextLastSeenRepo } = JSON.parse(json);
 
     dispatch(setIsLoading(false));
     dispatch(setLastSeenRepo(nextLastSeenRepo));
