@@ -1,44 +1,45 @@
-import React, { useState, useCallback } from "react";
-import { Wrapper } from "./styles";
+import React, { createContext, useCallback, useReducer } from "react";
+import reducer, { initialState } from "./reducer";
 import RepoList from "../../components/RepoList";
+import { setIsLoading, setRepos } from "./actions";
+import { Wrapper } from "./styles";
+
+export const AppDispatch = createContext(null);
 
 export default function App() {
-  const [repos, setRepos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedRepo, setSelectedRepo] = useState(null);
+  const [{ isLoading, repos, selectedRepo }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   const loadRepos = useCallback(
     () =>
       new Promise(resolve => {
-        setIsLoading(true);
+        dispatch(setIsLoading(true));
         setTimeout(() => {
-          setIsLoading(false);
+          dispatch(setIsLoading(false));
           resolve([...new Array(100)].map(() => Math.random()));
         }, 1000);
       }),
-    [setIsLoading]
+    []
   );
 
   const loadNextPage = useCallback(async () => {
     const nextRepos = await loadRepos();
-    setRepos([...repos, ...nextRepos]);
+    dispatch(setRepos([...repos, ...nextRepos]));
   }, [loadRepos, repos, setRepos]);
 
-  const makeSelectRepo = useCallback(
-    index => () => setSelectedRepo(repos[index]),
-    [repos, setSelectedRepo]
-  );
-
   return (
-    <Wrapper>
-      <RepoList
-        hasNextPage
-        isNextPageLoading={isLoading}
-        loadNextPage={loadNextPage}
-        makeSelectRepo={makeSelectRepo}
-        repos={repos}
-      />
-      {selectedRepo && <p>Selected repo: {selectedRepo}</p>}
-    </Wrapper>
+    <AppDispatch.Provider value={dispatch}>
+      <Wrapper>
+        <RepoList
+          hasNextPage
+          isNextPageLoading={isLoading}
+          loadNextPage={loadNextPage}
+          repos={repos}
+        />
+        {selectedRepo && <p>Selected repo: {repos[selectedRepo]}</p>}
+      </Wrapper>
+    </AppDispatch.Provider>
   );
 }

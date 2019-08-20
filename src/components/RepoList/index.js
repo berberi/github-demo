@@ -7,10 +7,10 @@ export default function RepoList({
   hasNextPage,
   isNextPageLoading,
   loadNextPage,
-  makeSelectRepo,
   repos,
   repos: { length: repoCount }
 }) {
+  // one extra item for loading indicator
   const itemCount = repoCount + (hasNextPage ? 1 : 0);
 
   const loadMoreItems = useCallback(
@@ -22,11 +22,11 @@ export default function RepoList({
 
   const renderItem = useCallback(
     ({ index, style }) => (
-      <RepoItem index={index} makeSelectRepo={makeSelectRepo} style={style}>
+      <RepoItem index={index} style={style}>
         {repos[index] || "Loading..."}
       </RepoItem>
     ),
-    [makeSelectRepo, repos]
+    [repos]
   );
 
   const renderList = useCallback(

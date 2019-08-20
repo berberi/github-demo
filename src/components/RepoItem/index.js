@@ -1,9 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useContext } from "react";
+import { setSelectedRepo } from "../../containers/App/actions";
+import { AppDispatch } from "../../containers/App";
 
-export default function RepoItem({ children, index, makeSelectRepo, style }) {
-  const selectRepo = useMemo(() => makeSelectRepo(index), [
-    index,
-    makeSelectRepo
+export default function RepoItem({ children, index, style }) {
+  const dispatch = useContext(AppDispatch);
+
+  const selectRepo = useCallback(() => dispatch(setSelectedRepo(index)), [
+    index
   ]);
 
   return (
