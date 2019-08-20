@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import InfiniteLoader from "react-window-infinite-loader";
 import RepoItem from "../RepoItem";
 import { FixedSizeList } from "react-window";
@@ -23,7 +23,7 @@ export default function RepoList({
   const renderItem = useCallback(
     ({ index, style }) => (
       <RepoItem index={index} style={style}>
-        {repos[index] || "Loading..."}
+        {repos[index] ? repos[index].full_name : "Loading..."}
       </RepoItem>
     ),
     [repos]
