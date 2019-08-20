@@ -22,3 +22,16 @@ export const ContentWrapper = styled.div`
   grid-area: content;
   justify-content: center;
 `;
+
+export const GitHubLink = styled.a`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 40px;
+  width: 40px;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+`;

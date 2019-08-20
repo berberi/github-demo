@@ -1,3 +1,4 @@
+import githubLogo from "./github-logo.png";
 import NoSelectedRepo from "../../components/NoSelectedRepo";
 import React, { createContext, useCallback, useReducer } from "react";
 import reducer, { initialState } from "./reducer";
@@ -5,7 +6,7 @@ import RepoList from "../../components/RepoList";
 import SelectedRepo from "../../components/SelectedRepo";
 import { LAMBDA_API_URL } from "./constants";
 import { finishLoading, setRepos, startLoading } from "./actions";
-import { ContentWrapper, Wrapper } from "./styles";
+import { ContentWrapper, GitHubLink, Wrapper } from "./styles";
 
 export const AppDispatch = createContext(null);
 
@@ -35,6 +36,9 @@ export default function App() {
   return (
     <AppDispatch.Provider value={dispatch}>
       <Wrapper>
+        <GitHubLink href="https://github.com/berberi/github-demo">
+          <img src={githubLogo} alt="GitHub" />
+        </GitHubLink>
         <RepoList
           hasNextPage={typeof lastSeenRepo === "number"}
           isNextPageLoading={isLoading}
