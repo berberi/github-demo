@@ -1,9 +1,9 @@
 import createReducer from "../../utils/createReducer";
 import {
-  SET_IS_LOADING,
-  SET_LAST_SEEN_REPO,
+  FINISH_LOADING,
   SET_REPOS,
-  SET_SELECTED_REPO
+  SET_SELECTED_REPO,
+  START_LOADING
 } from "./actions";
 
 export const initialState = {
@@ -13,14 +13,16 @@ export const initialState = {
   selectedRepo: null
 };
 
-const makeSetStateKey = key => (state, { [key]: value }) => ({
-  ...state,
-  [key]: value
-});
-
 export default createReducer(initialState, {
-  [SET_IS_LOADING]: makeSetStateKey("isLoading"),
-  [SET_LAST_SEEN_REPO]: makeSetStateKey("lastSeenRepo"),
-  [SET_REPOS]: makeSetStateKey("repos"),
-  [SET_SELECTED_REPO]: makeSetStateKey("selectedRepo")
+  [FINISH_LOADING]: (state, { lastSeenRepo }) => ({
+    ...state,
+    isLoading: false,
+    lastSeenRepo
+  }),
+  [SET_REPOS]: (state, { repos }) => ({ ...state, repos }),
+  [SET_SELECTED_REPO]: (state, { selectedRepo }) => ({
+    ...state,
+    selectedRepo
+  }),
+  [START_LOADING]: state => ({ ...state, isLoading: true })
 });

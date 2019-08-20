@@ -4,7 +4,7 @@ import reducer, { initialState } from "./reducer";
 import RepoList from "../../components/RepoList";
 import SelectedRepo from "../../components/SelectedRepo";
 import { LAMBDA_API_URL } from "./constants";
-import { setIsLoading, setLastSeenRepo, setRepos } from "./actions";
+import { finishLoading, setRepos, startLoading } from "./actions";
 import { ContentWrapper, Wrapper } from "./styles";
 
 export const AppDispatch = createContext(null);
@@ -16,15 +16,14 @@ export default function App() {
   ] = useReducer(reducer, initialState);
 
   const loadRepos = useCallback(async () => {
-    dispatch(setIsLoading(true));
+    dispatch(startLoading());
 
     const options = lastSeenRepo ? `?since=${lastSeenRepo}` : "";
     const response = await fetch(`${LAMBDA_API_URL}/repos${options}`);
     const json = await response.json();
     const { data, next: nextLastSeenRepo } = JSON.parse(json);
 
-    dispatch(setIsLoading(false));
-    dispatch(setLastSeenRepo(nextLastSeenRepo));
+    dispatch(finishLoading(nextLastSeenRepo));
     return data;
   }, [lastSeenRepo]);
 
